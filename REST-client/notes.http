@@ -8,7 +8,7 @@ GET {{notesURL}}/notes/
 
 ###
 
-GET {{notesURL}}/notes/3
+GET {{notesURL}}/notes/6321be72da88165fdfff9f2
 
 ###
 
@@ -16,5 +16,5 @@ POST {{notesURL}}/notes/
 Content-Type: application/json
 
 {
-    "note": "Ring mamma" 
+    "text": "Kom ihåg regnkläderna"
 }

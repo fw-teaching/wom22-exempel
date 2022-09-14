@@ -1,24 +1,45 @@
 
 const express = require('express')
 const router = express.Router()
+const Note = require('../models/note')
 
-const notes = [
-    { text: "Köp bröd." },
-    { text: "Köp sprit." },
-    { text: "Pumpa cykeln."}
-]
-
-router.get('/', (req, res) => {
-    res.send(notes)
+router.get('/', async (req, res) => {
+    try {
+        const notes = await Note.find()
+        res.send(notes)
+    } catch (error) {
+        res.status(500).send({ msg: error.message })
+    }
 }) 
 
-router.get('/:id', (req, res) => {
-    res.send(notes[req.params.id])
+router.get('/:id', async (req, res) => {
+    try {
+        const note = await Note.findOne({ _id: req.params.id })
+        if (!note) {
+            return res.status(404).send({msg: "Note not found."})
+        }
+        res.send(note)
+    } catch (error) {
+        res.status(500).send({ msg: error.message })
+    }
 }) 
 
-router.post('/', (req, res) => {
-    notes.push(req.body)
-    res.send({ sparade: req.body})
+router.post('/', async (req, res) => {
+    try {
+
+        // note är en instans av vår Note-model
+        const note = new Note({
+            text: req.body.text
+        })
+        // vi sparar vår note i databasen och tar emot svaret i newNote
+        const newNote = await note.save()
+
+        res.send({ sparade: newNote})
+
+    } catch (error) {
+        res.status(500).send({ msg: error.message })
+    }
+
 })
 
 module.exports = router
