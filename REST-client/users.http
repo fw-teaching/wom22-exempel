@@ -1,0 +1,12 @@
+@baseURL = http://localhost:3030
+
+GET {{baseURL}}/users
+
+### Skapa ny användare
+POST {{baseURL}}/users
+Content-Type: application/json
+
+{
+    "email": "john.doe@arcada.fi",
+    "password": "Password123"
+}
