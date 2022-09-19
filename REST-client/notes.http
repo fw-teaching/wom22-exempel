@@ -1,14 +1,16 @@
-@notesURL = http://localhost:3030
+#@notesURL = http://localhost:3030
+@notesURL = https://wom22-notes.azurewebsites.net
 
 GET {{notesURL}}/
 
 ###
 
 GET {{notesURL}}/notes/
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2MzI4NGU5YWYzZDM4ODNmOTUwNzkyODkiLCJlbWFpbCI6ImpvaG4uZG9lQGFyY2FkYS5maSIsImlhdCI6MTY2MzU4OTE5NH0.tKYXgGK0ac66CXnGe7vy1gUUXI5NrqXbyPLuuGuBaEY
 
 ###
 
-GET {{notesURL}}/notes/6321be72da88165fdfff9f2
+GET {{notesURL}}/notes/6321be72da88165fdfff9f23
 
 ###
 

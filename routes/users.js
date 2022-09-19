@@ -4,9 +4,10 @@ const express = require('express'),
     jwt = require('jsonwebtoken')
 
 const User = require('../models/user')
+const authToken = require('../middleware/authToken')
 
 // Hämta alla användare
-router.get('/', async (req, res) => {
+router.get('/', authToken, async (req, res) => {
     const users = await User.find()
     res.send(users)
 })
@@ -16,12 +17,12 @@ router.post('/login', async (req, res) => {
     // Kolla om det finns en användare med det namnet
     const user = await User.findOne({email: req.body.email}).exec()
     if (user == null) {
-        return res.status('401').send({msg: "No such user."})
+        return res.status(401).send({msg: "No such user."})
     }
 
     const match = await bcrypt.compare(req.body.password, user.password)
     if (!match) {
-        return res.status('401').send({msg: "Wrong password."})
+        return res.status(401).send({msg: "Wrong password."})
     }
 
     const token = jwt.sign({
@@ -33,8 +34,6 @@ router.post('/login', async (req, res) => {
         require('crypto').randomBytes(32).toString('hex')
     */
     res.send({ msg: "Login OK", token: token})
-
-
 })
 
 // Skapa ny användare

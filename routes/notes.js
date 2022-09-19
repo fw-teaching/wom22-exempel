@@ -2,8 +2,9 @@
 const express = require('express')
 const router = express.Router()
 const Note = require('../models/note')
+const authToken = require('../middleware/authToken')
 
-router.get('/', async (req, res) => {
+router.get('/', authToken, async (req, res) => {
     try {
         const notes = await Note.find()
         res.send(notes)
@@ -12,7 +13,7 @@ router.get('/', async (req, res) => {
     }
 }) 
 
-router.get('/:id', async (req, res) => {
+router.get('/:id', authToken, async (req, res) => {
     try {
         const note = await Note.findOne({ _id: req.params.id })
         if (!note) {
@@ -24,7 +25,7 @@ router.get('/:id', async (req, res) => {
     }
 }) 
 
-router.post('/', async (req, res) => {
+router.post('/', authToken, async (req, res) => {
     try {
 
         // note är en instans av vår Note-model
