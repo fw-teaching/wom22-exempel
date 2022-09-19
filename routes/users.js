@@ -1,6 +1,7 @@
-const express = require('express')
-const router = express.Router()
-const bcrypt = require('bcrypt')
+const express = require('express'),
+    router = express.Router(),
+    bcrypt = require('bcrypt'),
+    jwt = require('jsonwebtoken')
 
 const User = require('../models/user')
 
@@ -23,7 +24,15 @@ router.post('/login', async (req, res) => {
         return res.status('401').send({msg: "Wrong password."})
     }
 
-    res.send('Login ok!')
+    const token = jwt.sign({
+        sub: user._id, // sub = subject, användar-id
+        email: user.email
+    }, process.env.JWT_SECRET)
+
+    /* bra sätt att generera random string, i node-konsolen:
+        require('crypto').randomBytes(32).toString('hex')
+    */
+    res.send({ msg: "Login OK", token: token})
 
 
 })
