@@ -19,15 +19,16 @@ db.on('open', () => console.log('Connected to DB!'))
 
 app.use(express.json())
 
-app.get('/', (req, res) => {
-    res.send({ msg: 'Express says hello!'})
-})
+// Vi visar en statisk sida på site root
+app.use('/', express.static(__dirname + '/public'))
 
+// Vi importerar våra routes 
 const notesRouter = require('./routes/notes')
 app.use('/notes', notesRouter)
 
 const usersRouter = require('./routes/users')
 app.use('/users', usersRouter)
+
 
 app.listen(PORT, () => {
     console.log(`Server listening on port ${PORT}`)
