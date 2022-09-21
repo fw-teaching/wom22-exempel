@@ -28,7 +28,7 @@ router.post('/login', async (req, res) => {
     const token = jwt.sign({
         sub: user._id, // sub = subject, användar-id
         email: user.email
-    }, process.env.JWT_SECRET)
+    }, process.env.JWT_SECRET, { expiresIn: '1d' })
 
     /* bra sätt att generera random string, i node-konsolen:
         require('crypto').randomBytes(32).toString('hex')
