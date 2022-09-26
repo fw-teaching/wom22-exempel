@@ -1,30 +1,33 @@
 @notesURL = http://localhost:3030
 #@notesURL = https://wom22-notes.azurewebsites.net
 
+# REST Client kan läsa variabler ur .env
+@token = Bearer {{$dotenv JWT_TOKEN}}
+
 GET {{notesURL}}/
 
 ###
 
 GET {{notesURL}}/notes/
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2MzI4NGU5YWYzZDM4ODNmOTUwNzkyODkiLCJlbWFpbCI6ImpvaG4uZG9lQGFyY2FkYS5maSIsImlhdCI6MTY2Mzc2MzQwNCwiZXhwIjoxNjYzNzYzNDY0fQ.WEoi_I2iD9OXDfI-fgBEioBxn_4PQjz1-tl4l2LuadE
+Authorization: {{token}}
+
 ### Hämta alla arkiverade notes
 GET {{notesURL}}/notes/?archived=true
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2MzI4NGU5YWYzZDM4ODNmOTUwNzkyODkiLCJlbWFpbCI6ImpvaG4uZG9lQGFyY2FkYS5maSIsImlhdCI6MTY2MzU4OTE5NH0.tKYXgGK0ac66CXnGe7vy1gUUXI5NrqXbyPLuuGuBaEY
-
+Authorization: {{token}}
 
 ###
 
 GET {{notesURL}}/notes/632af34be70a60687a47a32c
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2MzI4NGU5YWYzZDM4ODNmOTUwNzkyODkiLCJlbWFpbCI6ImpvaG4uZG9lQGFyY2FkYS5maSIsImlhdCI6MTY2MzU4OTE5NH0.tKYXgGK0ac66CXnGe7vy1gUUXI5NrqXbyPLuuGuBaEY
+Authorization: {{token}}
 
 ###
 DELETE {{notesURL}}/notes/632af34be70a60687a47a32c
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2MzI4NGU5YWYzZDM4ODNmOTUwNzkyODkiLCJlbWFpbCI6ImpvaG4uZG9lQGFyY2FkYS5maSIsImlhdCI6MTY2MzU4OTE5NH0.tKYXgGK0ac66CXnGe7vy1gUUXI5NrqXbyPLuuGuBaEY
+Authorization: {{token}}
 
 ###
 POST {{notesURL}}/notes/
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2MzI4NGU5YWYzZDM4ODNmOTUwNzkyODkiLCJlbWFpbCI6ImpvaG4uZG9lQGFyY2FkYS5maSIsImlhdCI6MTY2MzU4OTE5NH0.tKYXgGK0ac66CXnGe7vy1gUUXI5NrqXbyPLuuGuBaEY
+Authorization: {{token}}
 
 {
     "text": "foo"
@@ -33,7 +36,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2MzI4NGU5Y
 ###
 PATCH {{notesURL}}/notes/632af68c1f4c7a0269109d00
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2MzI4NGU5YWYzZDM4ODNmOTUwNzkyODkiLCJlbWFpbCI6ImpvaG4uZG9lQGFyY2FkYS5maSIsImlhdCI6MTY2MzU4OTE5NH0.tKYXgGK0ac66CXnGe7vy1gUUXI5NrqXbyPLuuGuBaEY
+Authorization: {{token}}
 
 {
     "archived": true
