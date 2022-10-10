@@ -7,10 +7,18 @@ getNotes = async () => {
     const notes = await window.electron.getNotes()
     console.log(notes)
 
+    if (!notes) {
+        document.querySelector('#login').style.display = 'block'
+        return
+    }
+
     let notesHTML = "";
     for (const note of notes) {
         notesHTML += `
-            <div class="note">${note.text}</div>
+            <div class="note">
+                ${note.text}
+                <input class="btn-del" data-id="${note._id}" type="button" value="del">
+            </div>
         `;
     }
 
@@ -31,5 +39,28 @@ document.querySelector('#btn-login').addEventListener('click', async () => {
         return 
     }
 
+    document.querySelector('#login').style.display = 'none'
     getNotes()
+})
+
+document.querySelector('#btn-save').addEventListener('click', async () => {
+    
+    const noteId = 0
+    const noteText = document.querySelector('#note-text').value
+    const noteSaved = await window.electron.saveNote({
+        id: noteId, 
+        text: noteText
+    })
+    console.log(noteSaved)
+    getNotes()
+
+})
+
+document.querySelector('#notes').addEventListener('click', async (event) => {
+    console.log(event.target)
+    if (event.target.classList.contains('btn-del')) {
+        console.log(event.target.getAttribute('data-id'))
+        await window.electron.delNote(event.target.getAttribute('data-id'))
+
+    }
 })

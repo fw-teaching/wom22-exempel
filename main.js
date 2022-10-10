@@ -45,6 +45,11 @@ ipcMain.handle('get-notes', async () => {
       timeout: 2000
     })
     const notes = await resp.json()
+    if (resp.status > 201) {
+      console.log(notes)
+      return false
+    }
+
     return notes
 
   } catch (error) {
@@ -78,6 +83,35 @@ ipcMain.handle('notes-login', async (event, data) => {
 
 })
 
+ipcMain.handle('save-note', async (event, data) => {
+  console.log('save-note (main)')
+  try {
+    const resp = await fetch(API_URL + '/notes', {
+      method: 'POST',
+      headers: { 
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + store.get('jwt')
+      },
+      body: JSON.stringify({text: data.text}),
+      timeout: 3000
+    })
+    const savedNote = await resp.json()
+    console.log(savedNote)
+
+    if (resp.status > 201) return false
+
+    return savedNote
+
+  } catch (error) {
+    console.log(error.message)
+    return { 'msg': "Note save failed."}
+  }
+
+})
+
+ipcMain.handle('del-note', async (event, data) => {
+  console.log("Send DELETE request to API: /notes/" + data)
+})
 /*
 // Example functions for communication between main and renderer (backend/frontend)
 // Node skickar kommentar till browsern (renderer.js):

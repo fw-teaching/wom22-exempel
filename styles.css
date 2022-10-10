@@ -1,4 +1,8 @@
 /* styles.css */
+#login {
+    display: none;
+}
+
 .note {
     margin: 5px;
     border: 1px solid gray;

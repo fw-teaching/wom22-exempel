@@ -8,7 +8,11 @@ contextBridge.exposeInMainWorld('electron', {
 
   getNotes: () => ipcRenderer.invoke('get-notes'),
 
-  notesLogin: (data) => ipcRenderer.invoke('notes-login', data)
+  notesLogin: (data) => ipcRenderer.invoke('notes-login', data),
+
+  saveNote: (data) => ipcRenderer.invoke('save-note', data),
+
+  delNote: (data) => ipcRenderer.invoke('del-note', data)
   
 
 })
