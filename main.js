@@ -3,6 +3,11 @@ const {app, BrowserWindow, ipcMain} = require('electron')
 const path = require('path')
 const fetch = require('electron-fetch').default
 
+// "localStorage" for electron
+// https://www.npmjs.com/package/electron-store
+const Store = require('electron-store')
+const store = new Store()
+
 // Move this to .env (or similar...)
 const API_URL = "https://wom22-notes.azurewebsites.net"
 
@@ -36,6 +41,7 @@ ipcMain.handle('get-notes', async () => {
   console.log('get-notes (main)')
   try {
     const resp = await fetch(API_URL + '/notes', {
+      headers: { 'Authorization': 'Bearer ' + store.get('jwt') },
       timeout: 2000
     })
     const notes = await resp.json()
@@ -54,18 +60,20 @@ ipcMain.handle('notes-login', async (event, data) => {
     const resp = await fetch(API_URL + '/users/login', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        "email": "john.doe@arcada.fi",
-        "password": "Password123"
-      }),
-      timeout: 2000
+      body: JSON.stringify(data),
+      timeout: 3000
     })
-    const notes = await resp.json()
-    return notes
+    const user = await resp.json()
+    console.log(user)
+
+    if (resp.status > 201) return user
+
+    store.set('jwt', user.token)
+    return false // false = login succeeded
 
   } catch (error) {
     console.log(error.message)
-    return false
+    return { 'msg': "Login failed."}
   }
 
 })
