@@ -1,0 +1,43 @@
+@notesURL = http://localhost:3030
+#@notesURL = https://wom22-notes.azurewebsites.net
+
+# REST Client kan läsa variabler ur .env
+@token = Bearer {{$dotenv JWT_TOKEN}}
+
+GET {{notesURL}}/
+
+###
+
+GET {{notesURL}}/notes/
+Authorization: {{token}}
+
+### Hämta alla arkiverade notes
+GET {{notesURL}}/notes/?archived=true
+Authorization: {{token}}
+
+###
+
+GET {{notesURL}}/notes/632af34be70a60687a47a32c
+Authorization: {{token}}
+
+###
+DELETE {{notesURL}}/notes/632af34be70a60687a47a32c
+Authorization: {{token}}
+
+###
+POST {{notesURL}}/notes/
+Content-Type: application/json
+Authorization: {{token}}
+
+{
+    "text": "foo"
+}
+
+###
+PATCH {{notesURL}}/notes/632af68c1f4c7a0269109d00
+Content-Type: application/json
+Authorization: {{token}}
+
+{
+    "archived": true
+}

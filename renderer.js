@@ -3,12 +3,22 @@
  * be executed in the renderer process for that window.
  */
 
-(async () => {
-    console.log(await window.exposed.getStuffFromMain())
-    
-    await window.exposed.sendStuffToMain('Stuff from renderer')
-})()
+getNotes = async () => {
+    console.log('getNotes')
+    //console.log(await window.electron.getStuffFromMain())
+    //await window.electron.sendStuffToMain('Stuff from renderer')
 
-document.querySelector('#btn-test').addEventListener('click', async () => {
-    await window.exposed.btnClick('Clicked button!')
+    const notes = await window.electron.getNotes()
+    console.log(notes)
+}
+getNotes()
+
+
+document.querySelector('#btn-login').addEventListener('click', async () => {
+    await window.electron.notesLogin()
 })
+/*
+document.querySelector('#btn-test').addEventListener('click', async () => {
+    await window.electron.btnClick('Clicked button!')
+})
+*/
